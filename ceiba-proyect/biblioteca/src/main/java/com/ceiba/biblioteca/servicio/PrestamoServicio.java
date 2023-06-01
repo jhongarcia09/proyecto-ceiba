@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class PrestamoServicio implements PrestamoServicioInterface{
@@ -43,5 +44,17 @@ public class PrestamoServicio implements PrestamoServicioInterface{
             throw new IllegalArgumentException("Tipo de usuario no permitido en la biblioteca");
         }
         return fechaMaximadevolucion;
+    }
+    public Prestamo buscarPorid(Integer id) throws Exception{
+        try {
+            Optional<Prestamo> prestamoOptional=prestamoRepositorio.findById(id);
+            if (prestamoOptional.isPresent()){
+                return prestamoOptional.get();
+            }else{
+                throw  new Exception("usuario no valido");
+            }
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 }
